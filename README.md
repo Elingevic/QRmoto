@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QRmoto
 
-## Getting Started
+QR de emergencia para motorizados, conectado a su seguro. Prototipo para AseguraTech26.
 
-First, run the development server:
+- **Quien ayuda** escanea el casco y ve solo lo médico (sangre, alergias, condiciones). Con un toque avisa a la familia y a la aseguradora con su ubicación y su número.
+- **La familia** recibe la alerta y llama a quien ayuda. Sus números nunca se muestran a desconocidos.
+- **Personal verificado** (paramédicos, clínicas) inicia sesión una vez y ve identidad, póliza y contactos.
+- **La aseguradora** ve los eventos en tiempo real en `/panel`.
+
+## Rutas
+
+| Ruta | Qué es |
+|---|---|
+| `/` | Inicio |
+| `/registro` | Registro del motorizado |
+| `/qr/[codigo]` | Sticker y tarjeta para imprimir |
+| `/r/[codigo]` | Lo que se ve al escanear (`/r/demo` es el perfil de prueba) |
+| `/personal` | Inicio de sesión de personal verificado y aseguradora |
+| `/panel` | Panel de la aseguradora (requiere cuenta de aseguradora) |
+
+Cuentas de demo (clave `demo2026`): `clinica.demo`, `paramedico.demo`, `aseguradora.demo`.
+
+## Desarrollo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev -- -p 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Despliegue en Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Variables de entorno necesarias:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Valor |
+|---|---|
+| `SESION_SECRETO` | Cadena aleatoria larga. Sin ella, el inicio de sesión falla en producción. Generar con `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
+| `URL_BASE` | Opcional. URL pública (ej. `https://qrmoto.vercel.app`) para los QR impresos |
 
-## Learn More
+## Limitaciones del prototipo
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Los datos viven en memoria: se pierden al reiniciar y, en Vercel, cada instancia tiene los suyos. El siguiente paso es Supabase.
+- Las alertas a la familia no se envían todavía por WhatsApp/SMS; se ven en el panel.
+- Las claves de demo están en texto plano en `src/lib/store.ts`.
