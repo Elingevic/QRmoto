@@ -1,0 +1,15 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-10-23T15:40:00Z" },
+  "lists": "css",
+  "title": "Pulso · Pitch AseguraTech26",
+  "order": ["portada"],
+  "cover": "portada",
+  "sections": {
+    "s1": { "description": "Pulso en una lámina: problema, solución, valor para la aseguradora y prototipo en vivo", "start": "portada" }
+  },
+  "faces": {
+    "geist": { "family": "Geist", "href": "https://fonts.googleapis.com/css2?family=Geist:wght@400..800&display=swap" }
+  },
+  "designSystems": []
+}

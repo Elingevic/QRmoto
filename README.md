@@ -21,6 +21,18 @@ QR de emergencia para motorizados, conectado a su seguro. Prototipo para Asegura
 
 Cuentas de demo (clave `demo2026`): `clinica.demo`, `paramedico.demo`, `aseguradora.demo`.
 
+## Retomar en otra PC
+
+```bash
+git clone https://github.com/Elingevic/QRmoto.git
+cd QRmoto
+npm install
+```
+
+Luego crear `.env.local` con las mismas variables de Vercel (lista abajo). Ese archivo nunca se sube a GitHub: pásalo a la otra PC por un medio privado o copia los valores desde Supabase, @BotFather y Vercel.
+
+El material del pitch (video, lámina, logo del bot) está en [`presentacion/`](presentacion/README.md).
+
 ## Desarrollo
 
 ```bash

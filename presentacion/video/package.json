@@ -1,0 +1,12 @@
+{
+  "name": "pulso-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audio": "python audio.py",
+    "cuadros": "node capturar.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "23.11.1"
+  }
+}
