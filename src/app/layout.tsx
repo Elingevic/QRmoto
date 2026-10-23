@@ -8,11 +8,11 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.URL_BASE ?? "https://q-rmoto.vercel.app"),
-  title: "QRmoto · Si te caes de la moto, tu casco habla por ti",
+  metadataBase: new URL(process.env.URL_BASE ?? "https://pulso-ve.vercel.app"),
+  title: "Pulso · Si te caes de la moto, tu casco habla por ti",
   description:
     "Un QR en el casco que entrega tus datos médicos a quien te ayuda, avisa a tu familia con tu ubicación y activa tu seguro en la clínica.",
-  openGraph: { locale: "es_VE", siteName: "QRmoto", type: "website" },
+  openGraph: { locale: "es_VE", siteName: "Pulso", type: "website" },
 };
 
 export const viewport: Viewport = {

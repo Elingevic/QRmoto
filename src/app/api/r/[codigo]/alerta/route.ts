@@ -25,7 +25,7 @@ export async function POST(
   const primerNombre = m.nombre.split(" ")[0];
 
   const mensaje = [
-    `🚨 ALERTA QRmoto · ${horaCaracas()}`,
+    `🚨 Pulso · ALERTA DE EMERGENCIA · ${horaCaracas()}`,
     `Alguien escaneó el casco de ${primerNombre} y pidió ayuda.`,
     "",
     ubicacion ? `📍 Ubicación: ${linkMapa(ubicacion)}` : "📍 Ubicación no disponible.",
@@ -34,7 +34,7 @@ export async function POST(
       : "📞 Quien ayuda no dejó número.",
     m.seguro ? `🛡️ Su aseguradora (${m.seguro.aseguradora}) también fue avisada.` : null,
     "",
-    "⚠️ QRmoto y tu aseguradora NUNCA te pedirán dinero por este medio. Si alguien te llama pidiendo dinero, es una estafa.",
+    "⚠️ Pulso y tu aseguradora NUNCA te pedirán dinero por este medio. Si alguien te llama pidiendo dinero, es una estafa.",
   ]
     .filter((l) => l !== null)
     .join("\n");

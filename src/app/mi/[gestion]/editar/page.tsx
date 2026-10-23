@@ -4,7 +4,7 @@ import { obtenerPorGestion } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "Editar mi ficha · QRmoto",
+  title: "Editar mi ficha · Pulso",
   robots: { index: false, follow: false },
 };
 

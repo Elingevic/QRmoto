@@ -15,7 +15,7 @@ export default function NoEncontrado() {
             📞 Llamar al 911
           </a>
           <Link href="/" className="rounded-xl bg-white py-3 font-bold shadow-sm">
-            Ir a QRmoto
+            Ir a Pulso
           </Link>
         </div>
       </div>

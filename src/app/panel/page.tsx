@@ -115,7 +115,7 @@ export default function Panel() {
 
         {eventos.length === 0 ? (
           <div className="mt-8 rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center text-slate-500">
-            Esperando eventos… Escanea un casco con QRmoto desde otro dispositivo.
+            Esperando eventos… Escanea un casco con Pulso desde otro dispositivo.
           </div>
         ) : (
           <ul className="mt-6 grid gap-3">

@@ -6,7 +6,7 @@ import { urlBase } from "@/lib/url";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "Sticker demo · QRmoto",
+  title: "Sticker demo · Pulso",
   robots: { index: false, follow: false },
 };
 

@@ -1,4 +1,4 @@
-# QRmoto
+# Pulso
 
 QR de emergencia para motorizados, conectado a su seguro. Prototipo para AseguraTech26.
 
@@ -58,7 +58,7 @@ Variables de entorno (Production y Preview):
 Después del primer deploy, registrar el webhook del bot:
 
 ```bash
-npm run telegram:webhook -- https://q-rmoto.vercel.app
+npm run telegram:webhook -- https://pulso-ve.vercel.app
 ```
 
 ## Limitaciones del prototipo

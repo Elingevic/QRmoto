@@ -66,7 +66,7 @@ export default function VistaEscaneo({
       <div className="mx-auto max-w-md pb-10">
         <header className="bg-red-700 px-4 pb-4 pt-5 text-white">
           <p className="text-xs font-bold tracking-widest opacity-90">
-            EMERGENCIA MÉDICA · QRmoto
+            EMERGENCIA MÉDICA · Pulso
           </p>
           <h1 className="mt-1 text-3xl font-extrabold">{datos.primerNombre}</h1>
           <p className="text-sm opacity-90">{datos.edad} años · Motorizado</p>
@@ -196,7 +196,7 @@ export default function VistaEscaneo({
         )}
 
         <p className="mx-4 mt-6 text-center text-xs text-stone-500">
-          QRmoto y las aseguradoras nunca piden dinero a la familia por este medio.
+          Pulso y las aseguradoras nunca piden dinero a la familia por este medio.
         </p>
       </div>
     </main>

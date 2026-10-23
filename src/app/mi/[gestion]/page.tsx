@@ -8,7 +8,7 @@ import Invitar from "./Invitar";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
-  title: "Mi panel · QRmoto",
+  title: "Mi panel · Pulso",
   robots: { index: false, follow: false },
 };
 

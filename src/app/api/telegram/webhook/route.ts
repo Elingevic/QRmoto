@@ -30,7 +30,7 @@ async function responder(update: Update) {
     if (!m) {
       return enviarTexto(
         chatId,
-        "Este link no es válido o fue reemplazado. Pide a tu familiar que te envíe uno nuevo desde su panel de QRmoto.",
+        "Este link no es válido o fue reemplazado. Pide a tu familiar que te envíe uno nuevo desde su panel de Pulso.",
       );
     }
     const primerNombre = m.nombre.split(" ")[0];
@@ -41,7 +41,7 @@ async function responder(update: Update) {
         "",
         "Si alguien escanea su casco y pide ayuda, te llegará su ubicación y el número de quien lo está ayudando.",
         "",
-        "⚠️ QRmoto y las aseguradoras NUNCA te pedirán dinero por este medio. Si alguien te llama pidiendo dinero por un accidente, es una estafa.",
+        "⚠️ Pulso y las aseguradoras NUNCA te pedirán dinero por este medio. Si alguien te llama pidiendo dinero por un accidente, es una estafa.",
         "",
         "Para dejar de recibir alertas, escribe /stop.",
       ].join("\n"),
@@ -50,12 +50,12 @@ async function responder(update: Update) {
 
   if (comando === "/stop") {
     await desactivarChat(chatId);
-    return enviarTexto(chatId, "Dejaste de recibir alertas de QRmoto en este chat.");
+    return enviarTexto(chatId, "Dejaste de recibir alertas de Pulso en este chat.");
   }
 
   return enviarTexto(
     chatId,
-    "Hola, soy el bot de alertas de QRmoto. Para activarte, abre el link que te envió tu familiar desde su panel.",
+    "Hola, soy el bot de alertas de Pulso. Para activarte, abre el link que te envió tu familiar desde su panel.",
   );
 }
 
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   try {
     await responder(update);
   } catch (e) {
-    console.error("QRmoto: error en webhook de Telegram", e);
+    console.error("Pulso: error en webhook de Telegram", e);
   }
   // Siempre 200: si no, Telegram reintenta el mismo mensaje una y otra vez.
   return NextResponse.json({ ok: true });

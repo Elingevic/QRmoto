@@ -22,7 +22,7 @@ export default function Invitar({
   motorizado: string;
 }) {
   const [copiado, setCopiado] = useState(false);
-  const mensaje = `Hola ${contacto}, soy ${motorizado}. Te agregué como contacto de emergencia en QRmoto: si tengo un accidente en la moto, te llegará una alerta con mi ubicación. Actívala aquí (se abre en Telegram): ${link}`;
+  const mensaje = `Hola ${contacto}, soy ${motorizado}. Te agregué como contacto de emergencia en Pulso: si tengo un accidente en la moto, te llegará una alerta con mi ubicación. Actívala aquí (se abre en Telegram): ${link}`;
 
   async function copiar() {
     try {

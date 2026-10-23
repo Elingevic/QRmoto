@@ -1,4 +1,4 @@
--- QRmoto: esquema de base de datos.
+-- Pulso: esquema de base de datos.
 -- Ejecutar una vez en Supabase > SQL Editor.
 --
 -- Todas las tablas tienen RLS activado y ninguna política: la clave pública

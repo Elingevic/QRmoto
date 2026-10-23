@@ -31,7 +31,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     await notificarContactos(
       m,
       [
-        `🛡️ QRmoto · ${horaCaracas()}`,
+        `🛡️ Pulso · ${horaCaracas()}`,
         `${m.seguro?.aseguradora ?? "La aseguradora"} aprobó la cobertura de emergencia de ${primerNombre} en ${s.institucion}.`,
         s.montoUSD ? `Cobertura aprobada: hasta USD ${s.montoUSD.toLocaleString("es-VE")}.` : null,
         `Clave de emergencia: ${s.clave}`,

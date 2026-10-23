@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 
-// Permite instalar QRmoto en el teléfono (útil para paramédicos y clínicas).
+// Permite instalar Pulso en el teléfono (útil para paramédicos y clínicas).
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "QRmoto",
-    short_name: "QRmoto",
+    name: "Pulso",
+    short_name: "Pulso",
     description: "Identificación de emergencia para motorizados, conectada a su seguro.",
     start_url: "/",
     display: "standalone",

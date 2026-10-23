@@ -22,7 +22,7 @@ export async function notificarContactos(
         if (ubicacion) await enviarUbicacion(canal.chatId, ubicacion.lat, ubicacion.lng);
         return `${etiqueta} · Telegram ✓`;
       } catch (e) {
-        console.error("QRmoto: fallo al notificar", e);
+        console.error("Pulso: fallo al notificar", e);
         return `${etiqueta} · Telegram falló`;
       }
     }),

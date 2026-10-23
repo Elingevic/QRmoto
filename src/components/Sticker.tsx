@@ -49,7 +49,7 @@ export default async function Sticker({ d, url }: { d: VistaPublica; url: string
         </div>
         <div className="flex min-w-0 flex-col gap-0.5 p-2 text-[9px] leading-tight">
           <p className="text-[8px] font-extrabold tracking-wider text-red-700">
-            QRmoto · EMERGENCIA MÉDICA
+            Pulso · EMERGENCIA MÉDICA
           </p>
           <p className="text-sm font-extrabold">
             {d.primerNombre} · {d.edad} años

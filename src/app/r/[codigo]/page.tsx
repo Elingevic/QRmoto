@@ -13,7 +13,7 @@ import VistaEscaneo from "./VistaEscaneo";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Emergencia médica · QRmoto",
+  title: "Emergencia médica · Pulso",
   robots: { index: false, follow: false },
 };
 
@@ -45,7 +45,7 @@ export default async function Pagina({
     notificados = await notificarContactos(
       m,
       [
-        `🔐 QRmoto · ${horaCaracas()}`,
+        `🔐 Pulso · ${horaCaracas()}`,
         `${personal.nombre} (${personal.institucion}) abrió la ficha médica completa de ${primerNombre}.`,
         "",
         "Esto ocurre cuando personal médico verificado lo está atendiendo. Si no lo reconoces, avísale a tu familiar.",

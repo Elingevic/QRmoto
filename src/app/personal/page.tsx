@@ -3,7 +3,7 @@ import { personalActual } from "@/lib/sesion";
 import FormPersonal from "./FormPersonal";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Personal verificado · QRmoto" };
+export const metadata = { title: "Personal verificado · Pulso" };
 
 export default async function Pagina({
   searchParams,

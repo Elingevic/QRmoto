@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Vista previa al compartir el link (WhatsApp, Telegram, redes).
-export const alt = "QRmoto: si te caes de la moto, tu casco habla por ti";
+export const alt = "Pulso: si te caes de la moto, tu casco habla por ti";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,23 +22,18 @@ export default function Imagen() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 40, fontWeight: 800 }}>
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 16,
-              background: "white",
-              color: "#b91c1c",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 44,
-              fontWeight: 900,
-            }}
-          >
-            +
-          </div>
-          QRmoto
+          <svg width="64" height="64" viewBox="0 0 32 32">
+            <rect width="32" height="32" rx="8" fill="#FAFAF7" />
+            <path
+              d="M4 17h6l2.5-6 3.5 12 3-15 2.5 9H28"
+              fill="none"
+              stroke="#b91c1c"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          Pulso
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 1.05 }}>Si te caes de la moto,</div>

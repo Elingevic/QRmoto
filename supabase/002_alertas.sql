@@ -1,4 +1,4 @@
--- QRmoto: alertas reales y panel privado del motorizado.
+-- Pulso: alertas reales y panel privado del motorizado.
 -- Ejecutar una vez en Supabase > SQL Editor, después de esquema.sql.
 
 -- Hash (sha256) del link privado del motorizado. El link en sí nunca se guarda.

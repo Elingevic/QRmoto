@@ -70,7 +70,7 @@ const privacidad = [
   "Un desconocido puede ayudar, pero no puede consultar: identidad, póliza y teléfonos nunca son públicos.",
   "Cada vez que personal verificado abre la ficha completa, la familia recibe un aviso.",
   "Cada QR lleva un código aleatorio imposible de adivinar: nadie puede recorrer fichas ajenas.",
-  "Los mensajes advierten siempre que QRmoto y la aseguradora nunca piden dinero: frena la estafa del falso accidente.",
+  "Los mensajes advierten siempre que Pulso y la aseguradora nunca piden dinero: frena la estafa del falso accidente.",
 ];
 
 export default function Inicio() {
@@ -79,7 +79,7 @@ export default function Inicio() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-extrabold">
           <Logo className="h-8 w-8" />
-          QRmoto
+          Pulso
         </Link>
         <div className="flex items-center gap-1 text-sm font-semibold sm:gap-4">
           <a href="#como-funciona" className="hidden px-2 py-1 text-stone-600 sm:block">
@@ -227,7 +227,7 @@ export default function Inicio() {
       <footer className="border-t border-stone-200">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-6 text-sm text-stone-500 sm:px-6">
           <span className="flex items-center gap-2">
-            <Logo className="h-5 w-5" /> QRmoto · Prototipo para AseguraTech26
+            <Logo className="h-5 w-5" /> Pulso · Prototipo para AseguraTech26
           </span>
           <span>Desafío 4 · Supervisión y protección del asegurado</span>
         </div>
@@ -244,7 +244,7 @@ function Telefono() {
       <div className="rounded-[2.6rem] bg-stone-900 p-2.5 shadow-2xl shadow-stone-900/30">
         <div className="overflow-hidden rounded-[2.1rem] bg-stone-100">
           <div className="bg-red-700 px-4 pb-3 pt-7 text-white">
-            <p className="text-[9px] font-bold tracking-widest opacity-90">EMERGENCIA MÉDICA · QRmoto</p>
+            <p className="text-[9px] font-bold tracking-widest opacity-90">EMERGENCIA MÉDICA · Pulso</p>
             <p className="text-2xl font-extrabold">José</p>
             <p className="text-[11px] opacity-90">29 años · Motorizado</p>
           </div>
@@ -295,7 +295,7 @@ function Telefono() {
           <span className="grid h-6 w-6 place-items-center rounded-full bg-sky-500 text-[11px] font-bold text-white">
             ✈
           </span>
-          <p className="text-[11px] font-bold">QRmoto Alertas</p>
+          <p className="text-[11px] font-bold">Pulso Alertas</p>
           <p className="ml-auto text-[10px] text-stone-400">ahora</p>
         </div>
         <p className="mt-1.5 text-[11px] leading-snug">
@@ -309,7 +309,7 @@ function Telefono() {
       <div className="aparecer-tarde absolute -right-4 bottom-10 w-52 rounded-2xl bg-stone-900 p-3 text-white shadow-xl sm:-right-12">
         <p className="text-[9px] font-bold tracking-wider text-green-400">CLAVE DE EMERGENCIA</p>
         <p className="font-mono text-lg font-extrabold tracking-wider">CE-7K2Q9M</p>
-        <p className="text-[10px] text-stone-300">Aprobada en 42 s · Clínica Demo</p>
+        <p className="text-[10px] text-stone-300">Aprobada · Clínica Demo</p>
       </div>
     </div>
   );
