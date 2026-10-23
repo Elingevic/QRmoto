@@ -10,6 +10,7 @@ export async function POST(req: Request) {
   const r = leerRegistro(body);
   if (!r.ok) return NextResponse.json({ error: r.error }, { status: 400 });
 
-  const m = await crearMotorizado(r.datos);
-  return NextResponse.json({ codigo: m.codigo }, { status: 201 });
+  // El link privado (/mi/<gestion>) solo se entrega aquí, una vez.
+  const { gestion } = await crearMotorizado(r.datos);
+  return NextResponse.json({ gestion }, { status: 201 });
 }

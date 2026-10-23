@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { Ubicacion, VistaCompleta, VistaPublica } from "@/lib/tipos";
+import type { Personal, Ubicacion, VistaCompleta, VistaPublica } from "@/lib/tipos";
+import SolicitarClave from "./SolicitarClave";
 
 function pedirUbicacion(): Promise<Ubicacion | undefined> {
   return new Promise((resolve) => {
@@ -30,7 +31,7 @@ const pasos = [
 
 type Completo = {
   datos: VistaCompleta;
-  personal: { nombre: string; institucion: string };
+  personal: { nombre: string; institucion: string; tipo: Personal["tipo"] };
 };
 
 export default function VistaEscaneo({
@@ -82,7 +83,7 @@ export default function VistaEscaneo({
 
         {completo && (
           <section className="mx-4 mt-3 rounded-2xl border-2 border-green-600 bg-white p-4 shadow-sm">
-            <DatosCompletos {...completo} />
+            <DatosCompletos {...completo} codigo={datos.codigo} />
           </section>
         )}
 
@@ -236,7 +237,7 @@ function Bloque({
   );
 }
 
-function DatosCompletos({ datos: d, personal }: Completo) {
+function DatosCompletos({ datos: d, personal, codigo }: Completo & { codigo: string }) {
   return (
     <div className="grid gap-3 text-sm">
       <p className="rounded-lg bg-green-50 px-3 py-2 text-xs font-semibold text-green-800">
@@ -270,6 +271,7 @@ function DatosCompletos({ datos: d, personal }: Completo) {
               📞 Llamar a la aseguradora
             </a>
           )}
+          {personal.tipo !== "aseguradora" && <SolicitarClave codigo={codigo} />}
         </div>
       )}
       <div className="grid gap-2">

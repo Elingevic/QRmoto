@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Evento } from "@/lib/tipos";
+import Solicitudes, { type SolicitudPanel } from "./Solicitudes";
 
 type EventoPanel = Evento & {
   motorizado: {
@@ -23,6 +24,7 @@ const etiquetas: Record<Evento["tipo"], { texto: string; clase: string }> = {
 
 function hora(iso: string) {
   return new Date(iso).toLocaleTimeString("es-VE", {
+    timeZone: "America/Caracas",
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -31,6 +33,7 @@ function hora(iso: string) {
 
 export default function Panel() {
   const [eventos, setEventos] = useState<EventoPanel[]>([]);
+  const [solicitudes, setSolicitudes] = useState<SolicitudPanel[]>([]);
   const [conectado, setConectado] = useState(true);
   const [autorizado, setAutorizado] = useState(true);
 
@@ -38,12 +41,16 @@ export default function Panel() {
     let activo = true;
     async function cargar() {
       try {
-        const r = await fetch("/api/eventos", { cache: "no-store" });
+        const [r, rs] = await Promise.all([
+          fetch("/api/eventos", { cache: "no-store" }),
+          fetch("/api/solicitudes", { cache: "no-store" }),
+        ]);
         if (activo) setAutorizado(r.status !== 401);
         if (activo && r.ok) {
           setEventos(await r.json());
           setConectado(true);
         }
+        if (activo && rs.ok) setSolicitudes(await rs.json());
       } catch {
         if (activo) setConectado(false);
       }
@@ -92,15 +99,23 @@ export default function Panel() {
       </header>
 
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-8">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Kpi titulo="Escaneos" valor={eventos.length - alertas - accesos} />
           <Kpi titulo="Alertas a familia" valor={alertas} />
           <Kpi titulo="Atención verificada" valor={accesos} />
+          <Kpi titulo="Respuesta media de clave" valor={respuestaMedia(solicitudes)} />
         </div>
+
+        <Solicitudes
+          solicitudes={solicitudes}
+          onCambio={(s) =>
+            setSolicitudes((xs) => xs.map((x) => (x.id === s.id ? { ...x, ...s } : x)))
+          }
+        />
 
         {eventos.length === 0 ? (
           <div className="mt-8 rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center text-slate-500">
-            Esperando eventos… Abre <code className="font-mono">/r/demo</code> en otro dispositivo.
+            Esperando eventos… Escanea un casco con QRmoto desde otro dispositivo.
           </div>
         ) : (
           <ul className="mt-6 grid gap-3">
@@ -114,7 +129,16 @@ export default function Panel() {
   );
 }
 
-function Kpi({ titulo, valor }: { titulo: string; valor: number }) {
+function respuestaMedia(solicitudes: SolicitudPanel[]) {
+  const tiempos = solicitudes
+    .filter((s) => s.resuelto)
+    .map((s) => (new Date(s.resuelto!).getTime() - new Date(s.creado).getTime()) / 1000);
+  if (!tiempos.length) return "—";
+  const media = Math.round(tiempos.reduce((a, b) => a + b, 0) / tiempos.length);
+  return media < 60 ? `${media} s` : `${Math.floor(media / 60)} min`;
+}
+
+function Kpi({ titulo, valor }: { titulo: string; valor: number | string }) {
   return (
     <div className="rounded-2xl bg-white p-4 shadow-sm">
       <p className="text-xs font-semibold text-slate-500">{titulo}</p>

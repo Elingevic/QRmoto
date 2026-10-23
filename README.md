@@ -13,7 +13,8 @@ QR de emergencia para motorizados, conectado a su seguro. Prototipo para Asegura
 |---|---|
 | `/` | Inicio |
 | `/registro` | Registro del motorizado |
-| `/qr/[codigo]` | Sticker y tarjeta para imprimir |
+| `/mi/[link-privado]` | Panel privado del motorizado: sticker, alertas de la familia, edición e historial |
+| `/qr/demo` | Sticker del perfil demo (los reales solo desde el panel privado) |
 | `/r/[codigo]` | Lo que se ve al escanear (`/r/demo` es el perfil de prueba) |
 | `/personal` | Inicio de sesión de personal verificado y aseguradora |
 | `/panel` | Panel de la aseguradora (requiere cuenta de aseguradora) |
@@ -29,7 +30,7 @@ npm run dev -- -p 3001
 
 ## Base de datos (Supabase)
 
-1. En Supabase > SQL Editor, ejecutar `supabase/esquema.sql` una vez. Crea las tablas con RLS activado y sin políticas (la clave pública no puede leer nada) y carga el perfil demo y las cuentas demo.
+1. En Supabase > SQL Editor, ejecutar `supabase/esquema.sql` y luego `supabase/002_alertas.sql`, una vez cada uno. Crea las tablas con RLS activado y sin políticas (la clave pública no puede leer nada) y carga el perfil demo y las cuentas demo.
 2. Crear `web/.env.local`:
 
 ```
@@ -49,9 +50,19 @@ Variables de entorno (Production y Preview):
 | `SUPABASE_URL` | URL de la API del proyecto (`https://<id>.supabase.co`, no la del panel) |
 | `SUPABASE_SECRET_KEY` | Secret key del proyecto (Project Settings > API Keys) |
 | `SESION_SECRETO` | Cadena aleatoria larga: `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
+| `TELEGRAM_BOT_TOKEN` | Token del bot (de @BotFather) |
+| `TELEGRAM_BOT_USERNAME` | Usuario del bot, sin @ |
+| `TELEGRAM_WEBHOOK_SECRET` | Cadena aleatoria; Telegram la envía en cada mensaje para autenticarse |
 | `URL_BASE` | Opcional. URL pública para los QR impresos |
+
+Después del primer deploy, registrar el webhook del bot:
+
+```bash
+npm run telegram:webhook -- https://q-rmoto.vercel.app
+```
 
 ## Limitaciones del prototipo
 
-- Las alertas a la familia no se envían todavía por WhatsApp/SMS; se ven en el panel.
-- El motorizado aún no puede editar su ficha después de registrarse.
+- Las alertas salen por Telegram; WhatsApp (API oficial de Meta) es el siguiente canal.
+- Si el motorizado pierde su link privado, no hay forma de recuperarlo todavía.
+- El panel de la aseguradora muestra a todos los motorizados, no solo a sus asegurados.

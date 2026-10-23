@@ -34,6 +34,31 @@ export type Motorizado = {
   demo?: boolean;
 };
 
+// Canal de alerta de un contacto (por ahora Telegram; WhatsApp después).
+export type Canal = {
+  token: string;
+  contacto: number;
+  canal: "telegram" | "whatsapp";
+  chatId: string | null;
+  activado: string | null;
+};
+
+export type EstadoClave = "pendiente" | "aprobada" | "rechazada";
+
+export type SolicitudClave = {
+  id: string;
+  codigo: string;
+  institucion: string;
+  solicitante: string;
+  estado: EstadoClave;
+  clave: string | null;
+  montoUSD: number | null;
+  motivo: string | null;
+  creado: string;
+  resuelto: string | null;
+  resueltoPor: string | null;
+};
+
 export type Ubicacion = { lat: number; lng: number; precision?: number };
 
 export type TipoEvento = "escaneo" | "alerta_familia" | "acceso_verificado";
