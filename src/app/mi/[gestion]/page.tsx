@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Marca from "@/components/Marca";
 import { eventosDe, listarCanales, obtenerPorGestion } from "@/lib/store";
 import { linkInvitacion, telegramConfigurado } from "@/lib/telegram";
 import type { Evento } from "@/lib/tipos";
@@ -47,7 +48,7 @@ export default async function Pagina({
     <main className="min-h-dvh bg-stone-100 px-4 py-8 text-stone-900">
       <div className="mx-auto grid max-w-lg gap-4">
         <header>
-          <p className="text-sm font-bold tracking-widest text-red-700">QRmoto</p>
+          <Marca />
           <h1 className="mt-1 text-3xl font-extrabold">Hola, {primerNombre}</h1>
         </header>
 

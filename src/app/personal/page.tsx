@@ -1,3 +1,4 @@
+import Marca from "@/components/Marca";
 import { personalActual } from "@/lib/sesion";
 import FormPersonal from "./FormPersonal";
 
@@ -17,7 +18,7 @@ export default async function Pagina({
   return (
     <main className="min-h-dvh bg-stone-100 px-4 py-10 text-stone-900">
       <div className="mx-auto max-w-sm">
-        <p className="text-sm font-bold tracking-widest text-red-700">QRmoto</p>
+        <Marca />
         <h1 className="mt-1 text-2xl font-extrabold">Personal verificado</h1>
         <p className="mt-2 text-sm text-stone-600">
           Para paramédicos, bomberos y clínicas aliadas. Inicias sesión una vez y, al escanear un

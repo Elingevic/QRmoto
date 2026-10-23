@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Marca from "@/components/Marca";
 import type { Motorizado } from "@/lib/tipos";
 import { TIPOS_SANGRE } from "@/lib/validar";
 
@@ -91,7 +92,7 @@ export default function FormFicha({
     <main className="min-h-dvh bg-stone-100 px-4 py-8 text-stone-900">
       <form onSubmit={enviar} className="mx-auto grid max-w-lg gap-5">
         <header>
-          <p className="text-sm font-bold tracking-widest text-red-700">QRmoto</p>
+          <Marca />
           <h1 className="mt-1 text-3xl font-extrabold">
             {editando ? "Editar mi ficha" : "Crea tu QR de emergencia"}
           </h1>
