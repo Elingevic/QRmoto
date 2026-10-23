@@ -1,3 +1,7 @@
+import { verificarClave } from "./clave";
+import { almacenMemoria } from "./datos/memoria";
+import { almacenSupabase } from "./datos/supabase";
+import type { Almacen } from "./datos/tipos";
 import type {
   Evento,
   Motorizado,
@@ -6,83 +10,25 @@ import type {
   VistaPublica,
 } from "./tipos";
 
-// Almacenamiento en memoria para el demo local. Se reemplaza por Supabase al
-// publicar (en serverless cada instancia tendría su propia memoria).
-
-const semilla: Motorizado[] = [
-  {
-    codigo: "demo",
-    nombre: "José Gregorio",
-    apellido: "Pérez Rondón",
-    cedula: "V-18.456.789",
-    edad: 29,
-    ciudad: "Caracas",
-    sangre: "O+",
-    donante: true,
-    alergias: ["Penicilina", "AINEs (ibuprofeno)"],
-    condiciones: ["Diabetes tipo 1"],
-    medicamentos: ["Insulina glargina (diaria)"],
-    notas: "Usa lentes de contacto",
-    contactos: [
-      { nombre: "María Rondón", relacion: "Mamá", telefono: "+58 414-555-0101" },
-      { nombre: "Andreína Pérez", relacion: "Hermana", telefono: "+58 424-555-0202" },
-    ],
-    seguro: {
-      aseguradora: "Aseguradora Demo",
-      poliza: "AP-MOTO-2026-004512",
-      plan: "Accidentes Personales Moto",
-      vigenteHasta: "2027-03-31",
-      coberturaEmergenciaUSD: 3000,
-      telefonoEmergencia: "+58 212-555-0000",
-      verificado: true,
-    },
-    moto: { marca: "Bera", modelo: "SBR 150", placa: "AB1C23D", color: "Negra" },
-    demo: true,
-  },
-];
-
-// Demo: al pasar a Supabase las claves se guardan con hash.
-const personalSemilla: Personal[] = [
-  {
-    usuario: "clinica.demo",
-    clave: "demo2026",
-    nombre: "Dra. Carolina Méndez",
-    institucion: "Clínica Demo Caracas",
-    tipo: "clinica",
-  },
-  {
-    usuario: "paramedico.demo",
-    clave: "demo2026",
-    nombre: "Luis Rangel",
-    institucion: "Ambulancias Demo",
-    tipo: "paramedico",
-  },
-  {
-    usuario: "aseguradora.demo",
-    clave: "demo2026",
-    nombre: "Centro de Siniestros",
-    institucion: "Aseguradora Demo",
-    tipo: "aseguradora",
-  },
-];
-
-type Db = {
-  motorizados: Map<string, Motorizado>;
-  personal: Map<string, Personal>;
-  eventos: Evento[];
-};
-
-const g = globalThis as unknown as { __qrmotoDb?: Db };
-const db: Db =
-  g.__qrmotoDb ??
-  (g.__qrmotoDb = {
-    motorizados: new Map(semilla.map((m) => [m.codigo, m])),
-    personal: new Map(personalSemilla.map((p) => [p.usuario, p])),
-    eventos: [],
-  });
+// Supabase si está configurado; si no, memoria (solo para desarrollo local).
+let almacen: Almacen | undefined;
+function datos() {
+  if (almacen) return almacen;
+  const url = process.env.SUPABASE_URL;
+  const clave = process.env.SUPABASE_SECRET_KEY;
+  if (url && clave) {
+    almacen = almacenSupabase(url, clave);
+  } else {
+    if (process.env.NODE_ENV === "production") {
+      console.warn("QRmoto: sin SUPABASE_URL/SUPABASE_SECRET_KEY, usando memoria.");
+    }
+    almacen = almacenMemoria();
+  }
+  return almacen;
+}
 
 export async function obtenerMotorizado(codigo: string) {
-  return db.motorizados.get(codigo) ?? null;
+  return datos().obtenerMotorizado(codigo);
 }
 
 // Código público del QR: aleatorio y difícil de adivinar, para que nadie pueda
@@ -94,25 +40,32 @@ function nuevoCodigo() {
   return Array.from(bytes, (b) => ALFABETO[b % ALFABETO.length]).join("");
 }
 
-export async function crearMotorizado(datos: Omit<Motorizado, "codigo">) {
-  let codigo = nuevoCodigo();
-  while (db.motorizados.has(codigo)) codigo = nuevoCodigo();
-  const m: Motorizado = { ...datos, codigo };
-  db.motorizados.set(codigo, m);
-  return m;
+export async function crearMotorizado(d: Omit<Motorizado, "codigo">) {
+  for (let intento = 0; intento < 5; intento++) {
+    const m: Motorizado = { ...d, codigo: nuevoCodigo() };
+    if (await datos().insertarMotorizado(m)) return m;
+  }
+  throw new Error("No se pudo generar un código único");
+}
+
+type PersonalPublico = Omit<Personal, "claveHash">;
+
+function sinClave(p: Personal): PersonalPublico {
+  return { usuario: p.usuario, nombre: p.nombre, institucion: p.institucion, tipo: p.tipo };
 }
 
 export async function obtenerPersonal(usuario: string) {
-  return db.personal.get(usuario) ?? null;
+  const p = await datos().obtenerPersonal(usuario);
+  return p && sinClave(p);
 }
 
 export async function verificarPersonal(usuario: string, clave: string) {
-  const p = db.personal.get(usuario);
-  return p && p.clave === clave ? p : null;
+  const p = await datos().obtenerPersonal(usuario);
+  return p && verificarClave(clave, p.claveHash) ? sinClave(p) : null;
 }
 
 export async function ultimaAlerta(codigo: string) {
-  return db.eventos.find((e) => e.codigo === codigo && e.tipo === "alerta_familia") ?? null;
+  return datos().ultimaAlerta(codigo);
 }
 
 export async function registrarEvento(e: Omit<Evento, "id" | "fecha">) {
@@ -121,15 +74,12 @@ export async function registrarEvento(e: Omit<Evento, "id" | "fecha">) {
     id: crypto.randomUUID(),
     fecha: new Date().toISOString(),
   };
-  db.eventos.unshift(evento);
+  await datos().insertarEvento(evento);
   return evento;
 }
 
 export async function listarEventos(limite = 50) {
-  return db.eventos.slice(0, limite).map((e) => ({
-    ...e,
-    motorizado: db.motorizados.get(e.codigo) ?? null,
-  }));
+  return datos().listarEventos(limite);
 }
 
 export function seguroVigente(m: Motorizado) {

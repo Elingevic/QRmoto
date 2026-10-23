@@ -40,7 +40,7 @@ export type TipoEvento = "escaneo" | "alerta_familia" | "acceso_verificado";
 
 export type Personal = {
   usuario: string;
-  clave: string;
+  claveHash: string;
   nombre: string;
   institucion: string;
   tipo: "paramedico" | "clinica" | "aseguradora";

@@ -27,17 +27,31 @@ npm install
 npm run dev -- -p 3001
 ```
 
+## Base de datos (Supabase)
+
+1. En Supabase > SQL Editor, ejecutar `supabase/esquema.sql` una vez. Crea las tablas con RLS activado y sin políticas (la clave pública no puede leer nada) y carga el perfil demo y las cuentas demo.
+2. Crear `web/.env.local`:
+
+```
+SUPABASE_URL=https://<id-del-proyecto>.supabase.co
+SUPABASE_SECRET_KEY=sb_secret_...
+SESION_SECRETO=<cadena aleatoria>
+```
+
+Sin `SUPABASE_URL`/`SUPABASE_SECRET_KEY` la app usa memoria (solo para desarrollo).
+
 ## Despliegue en Vercel
 
-Variables de entorno necesarias:
+Variables de entorno (Production y Preview):
 
 | Variable | Valor |
 |---|---|
-| `SESION_SECRETO` | Cadena aleatoria larga. Sin ella, el inicio de sesión falla en producción. Generar con `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
-| `URL_BASE` | Opcional. URL pública (ej. `https://qrmoto.vercel.app`) para los QR impresos |
+| `SUPABASE_URL` | URL de la API del proyecto (`https://<id>.supabase.co`, no la del panel) |
+| `SUPABASE_SECRET_KEY` | Secret key del proyecto (Project Settings > API Keys) |
+| `SESION_SECRETO` | Cadena aleatoria larga: `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
+| `URL_BASE` | Opcional. URL pública para los QR impresos |
 
 ## Limitaciones del prototipo
 
-- Los datos viven en memoria: se pierden al reiniciar y, en Vercel, cada instancia tiene los suyos. El siguiente paso es Supabase.
 - Las alertas a la familia no se envían todavía por WhatsApp/SMS; se ven en el panel.
-- Las claves de demo están en texto plano en `src/lib/store.ts`.
+- El motorizado aún no puede editar su ficha después de registrarse.
